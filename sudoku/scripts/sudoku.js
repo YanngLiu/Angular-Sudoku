@@ -200,32 +200,20 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             cell.focus = false;
             cell.sameNumber = false;
             
-    }, this.isValid = function(i, j , c) {
-        // Check colum
-        for (var row = 0; row < 9; row++){
-            var tmp = this.grid[this._coordinatesToPosition({
-                x: row,
-                y: j
-            })];
+        }, this.isValid = function(i, j , c) {
+            // Check colum
+            for (var row = 0; row < 9; row++){
+                var tmp = this.grid[this._coordinatesToPosition({
+                    x: row,
+                    y: j
+                })];
 
-            if (tmp.value == c)
-                return false;
-        }
- 
-        // Check row
-        for (var col = 0; col < 9; col++){
-            var tmp = this.grid[this._coordinatesToPosition({
-                x: i,
-                y: col
-            })];
-
-            if (tmp.value == c)
-                return false;
-        }
- 
-        // Check 3 x 3 block
-        for (var row = Math.floor((i / 3)) * 3; row < Math.floor((i / 3)) * 3 + 3; row++){
-            for (var col = Math.floor((j / 3)) * 3; col < Math.floor((j / 3)) * 3 + 3; col++){
+                if (tmp.value == c)
+                    return false;
+            }
+     
+            // Check row
+            for (var col = 0; col < 9; col++){
                 var tmp = this.grid[this._coordinatesToPosition({
                     x: i,
                     y: col
@@ -234,38 +222,56 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 if (tmp.value == c)
                     return false;
             }
-        }
-        return true;
-    }, this.resolve = function(showAnswer) {
-        for (var a = 0; 9 > a; a++){
-            for (var b = 0; 9 > b; b++) {
-                var tmp = this.grid[this._coordinatesToPosition({
-                    x: a,
-                    y: b
-                })];
-                if(tmp.value==null){
-                    for (var c = 1; c <= 9; c++) {
-                        // trial. Try 1 through 9 for each cell
-                        if (this.isValid(a, b, c)) {
-                            tmp.value = c; // Put c for this cell
-                            if(showAnswer){
-                                tmp.userValue = c;
-                            }
-                            if (this.resolve())
-                                return true; // If it's the solution return true
-                            else{
-                                tmp.value = null; // Otherwise go back
+     
+            // Check 3 x 3 block
+            for (var row = Math.floor((i / 3)) * 3; row < Math.floor((i / 3)) * 3 + 3; row++){
+                for (var col = Math.floor((j / 3)) * 3; col < Math.floor((j / 3)) * 3 + 3; col++){
+                    var tmp = this.grid[this._coordinatesToPosition({
+                        x: i,
+                        y: col
+                    })];
+
+                    if (tmp.value == c)
+                        return false;
+                }
+            }
+            return true;
+        }, this.resolve = function(showAnswer) {
+            if(!validGame()){
+                // resolve a wrong game, will cost lots of time.
+                return;
+            }
+            resolveDetail(showAnswer);
+        }, this.resolveDetail = function(showAnswer) {
+            for (var a = 0; 9 > a; a++){
+                for (var b = 0; 9 > b; b++) {
+                    var tmp = this.grid[this._coordinatesToPosition({
+                        x: a,
+                        y: b
+                    })];
+                    if(tmp.value==null){
+                        for (var c = 1; c <= 9; c++) {
+                            // trial. Try 1 through 9 for each cell
+                            if (this.isValid(a, b, c)) {
+                                tmp.value = c; // Put c for this cell
                                 if(showAnswer){
-                                    tmp.userValue = null;
+                                    tmp.userValue = c;
+                                }
+                                if (this.resolveDetail())
+                                    return true; // If it's the solution return true
+                                else{
+                                    tmp.value = null; // Otherwise go back
+                                    if(showAnswer){
+                                        tmp.userValue = null;
+                                    }
                                 }
                             }
                         }
+                        return false;
                     }
-                    return false;
                 }
             }
-        }
-        return true;
+            return true;
         }, this.remove = function() {
             this.grid[this._coordinatesToPosition({
                 x: this.focus.x,
@@ -363,6 +369,22 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     }
                 }
             }
+    }, this.validGame = function() {
+        this.clearWrongs();
+        this.checkValues();
+
+        for (var a = 0; 9 > a; a++){
+            for (var b = 0; 9 > b; b++) {
+                var c = this.grid[this._coordinatesToPosition({
+                    x: a,
+                    y: b
+                })];
+                if(c.wrong){
+                    return false;
+                }
+            }        
+        }
+        return true;
     }, this.inputGame = function() {
         for (var a = 0; 9 > a; a++)
             for (var b = 0; 9 > b; b++) {
