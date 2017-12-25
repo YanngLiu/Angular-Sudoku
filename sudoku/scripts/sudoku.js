@@ -237,11 +237,11 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             }
             return true;
         }, this.resolve = function(showAnswer) {
-            if(!validGame()){
+            if(!this.validGame()){
                 // resolve a wrong game, will cost lots of time.
                 return;
             }
-            resolveDetail(showAnswer);
+            this.resolveDetail(showAnswer);
         }, this.resolveDetail = function(showAnswer) {
             for (var a = 0; 9 > a; a++){
                 for (var b = 0; 9 > b; b++) {
