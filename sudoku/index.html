@@ -1,0 +1,74 @@
+<!doctype html> 
+<html class="no-js">
+   <head>
+      <meta charset="utf-8">
+      <title>Sudoku Online</title>
+      <!-- Place favicon.ico and apple-touch-icon.png in the root directory --> 
+      <link rel="stylesheet" href="./styles/main.085c8007.css">
+      <meta name="description" content="Play sudokus with several levels of difficulty, without having to download anything or install anything in an elegant and intuitive way.">
+      <meta name="viewport" content="width=device-width">
+      <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+      <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+      <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+      <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+   <body ng-app="sudokuApp">
+      <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]--> <!-- Add your site or application content here --> 
+      <div class="container">
+         <div class="header">
+            <!-- AddThis Button BEGIN --> 
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style"> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a> <a class="addthis_button_email"></a> </div>
+            <script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script> <script type="text/javascript" src="./addthis_widget.js#pubid=ra-4ff845700955a13b"></script> <!-- AddThis Button END --> 
+            <h3 class="text-muted" id="maintitle">数独</h3>
+         </div>
+         <div ng-include="'./views/main.html'"></div>
+         <div id="rules">
+            <h3>游戏规则</h3>
+            <p> 数独是一个数学游戏。 目标是填充1到9的数字，并具有以下限制： 
+            <ul>
+               <li> 同一行中，不能有重复的数字 </li>
+               <li> 同一列中，不能有重复的数字。 </li>
+               <li> 在相同的象限（框架标有较粗的边框），不能有重复的数字。 </li>
+            </ul>
+            这三个简单的规则都是完成一个数独所必需的。</p> 
+            <h3>数独的历史</h3>
+            <p> 数独游戏，尽管有一个日本名字，但实际上它起源于伟大的瑞士数学家欧拉在十八世纪的工作。然而，作为一种消遣，目前的形式是由霍华德·加斯（Howard Garns）设计的，他把这个游戏称为“数字广场”。然而，这个游戏并没有受到欢迎，加斯也没有看到他的作品如何在世界各地延续下去。</p>
+            <p> 虽然不是很受欢迎，这个逻辑游戏继续在杂志出版多年，直到在日本于1984年发布的名字Sūji wa dokushin ni kagiru（数字は独身に限る），缩写为目前的名称：数独。 </p>
+            <p> <em>泰晤士报</em>于2004年开始发行“数独”。从那一刻起，这个游戏在英国大受欢迎，甚至在电视节目中播放数独游戏的解题过程。现在它在世界各地流行。这种游戏达到了这样一个水平，2008年的一场法庭判决被取消，因为其中5名陪审团成员在审判期间玩数独。 </p>
+            <h3>对健康的好处</h3>
+            据美国伯克利大学的一项研究，定期面对数独和其他精神运动会降低β淀粉样蛋白，而那是造成阿尔茨海默病的原因之一。
+         </div>
+         <div class="footer">
+            <p> </p>
+         </div>
+      </div>
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID --> <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         
+         ga('create', 'UA-51610281-1', 'pandemicquiz.com');
+         ga('send', 'pageview');
+      </script> <!--[if lt IE 9]>
+      <script src="/scripts/oldieshim.a466b7b1.js"></script>
+      <![endif]-->    
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular-route.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular-cookies.js"></script>
+    <!--script src="bower_components/angular-swipe/dist/angular-swipe.js"></script-->
+    <script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular-animate.js"></script>
+    <script src="./scripts/sudoku.js"></script>

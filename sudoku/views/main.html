@@ -1,0 +1,37 @@
+<div id="content" ng-controller="GameController as ctrl">
+   <div id="heading" class="row">
+      <div class="scores-container">
+         <div class="timer-container">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }}</div>
+         <button class="btn btn-default" ng-click="ctrl.game.checkValues()"> 检查</button> <button class="btn btn-default" ng-click="ctrl.game.tips()"> 提示</button> <button class="btn btn-default" ng-click="ctrl.game.newGame()"> 新游戏 </button> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" checked value="0"> 容易</label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="1"> 一般 </label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="2"> 困难 </label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="3"> 超难 </label> <button class="btn btn-default" ng-click="ctrl.game.inputGame()"> 输入</button><button class="btn btn-default" ng-click="ctrl.game.inputGameOver()"> 输入结束</button>
+      </div>
+   </div>
+   <div id="game-container">
+      <div grid ng-model="ctrl.game" class="row"></div>
+      <div class="row">
+         <div id="selector" selector ng-model="ctrl.game"></div>
+      </div>
+      <div class="row">
+         <div id="importergame" importergame ng-model="ctrl.game"></div>
+      </div>
+   </div>
+   <div class="modal fade" id="winmodal">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button> 
+               <h4 class="modal-title">!! Congratulations!!</h4>
+            </div>
+            <div class="modal-body">
+               <h3>Congratulations, you have completed the sudoku correctly in {{ ctrl.game.printableHours }}h {{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }}! </h3>
+               <p>Maybe it's a good time to brag about sharing the result;) </p>
+               <div class="clearfix addthis_toolbox addthis_default_style addthis_32x32_style" addthis:title="He completado un Sudoku en {{ ctrl.game.printableHours }}h {{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }}. ¿Crees que puedes hacerlo mejor?"> <a class="addthis_button_preferred_1"></a> <a class="addthis_button_preferred_2"></a> <a class="addthis_button_preferred_3"></a> <a class="addthis_button_preferred_4"></a> <a class="addthis_button_compact"></a> </div>
+               <script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script> 
+            </div>
+            <div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button> </div>
+         </div>
+         <!-- /.modal-content --> 
+      </div>
+      <!-- /.modal-dialog --> 
+   </div>
+   <!-- /.modal --> 
+</div>
