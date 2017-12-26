@@ -257,7 +257,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                                 if(showAnswer){
                                     tmp.userValue = c;
                                 }
-                                if (this.resolveDetail())
+                                if (this.resolveDetail(showAnswer))
                                     return true; // If it's the solution return true
                                 else{
                                     tmp.value = null; // Otherwise go back
