@@ -227,7 +227,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             for (var row = Math.floor((i / 3)) * 3; row < Math.floor((i / 3)) * 3 + 3; row++){
                 for (var col = Math.floor((j / 3)) * 3; col < Math.floor((j / 3)) * 3 + 3; col++){
                     var tmp = this.grid[this._coordinatesToPosition({
-                        x: i,
+                        x: row,
                         y: col
                     })];
 
