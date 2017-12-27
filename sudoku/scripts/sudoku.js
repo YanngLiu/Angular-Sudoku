@@ -52,7 +52,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             return;
         }
         for (var i = 0; i < len; i++) {
-            b.putNumberXY(Math.floor(i/9), i%9, parseInt(tmp[i]));
+            // row and column are exchanged
+            b.putNumberXY(i % 9, Math.floor(i / 9), parseInt(tmp[i]));
         }
         b.clearWrongs();
         b.resolve(true);
@@ -422,9 +423,10 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         var result = "";
         for (var a = 0; 9 > a; a++){
             for (var b = 0; 9 > b; b++) {
+                // row and column are exchanged
                 var c = this.grid[this._coordinatesToPosition({
-                    x: a,
-                    y: b
+                    x: b,
+                    y: a
                 })];
                 if(!c.masked){
                     // output the giving condition
@@ -440,6 +442,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             }
             result += "\n";
         }
+        return result;
     }, this.tips = function() {
         // give tips for the current cell
         for (var a = 0; 9 > a; a++){
