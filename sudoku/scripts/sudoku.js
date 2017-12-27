@@ -56,6 +56,9 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }
         b.clearWrongs();
         b.resolve(true);
+    }, this.exportGame = function() {
+        var result = b.exportGame();
+        angular.element('#gameValue').val(result);
     }, this.move = function(c) {
         var d, e = function() {
             ("up" === c || "down" === c || "left" === c || "right" === c) && b.moveFocus(c), (1 === c || 2 === c || 3 === c || 4 === c || 5 === c || 6 === c || 7 === c || 8 === c || 9 === c) && (b.putNumber(c), b.highlightSameNumber(), b.clearWrongs(), b.checkWin() && (d.timerRuning = false, d.openModal())), ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs())
@@ -415,7 +418,47 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 }
             }
         this.resolve(false);
+    }, this.exportGame = function() {
+        var result = "";
+        for (var a = 0; 9 > a; a++){
+            for (var b = 0; 9 > b; b++) {
+                var c = this.grid[this._coordinatesToPosition({
+                    x: a,
+                    y: b
+                })];
+                if(!c.masked){
+                    // output the giving condition
+                    result += c.value;
+                }else if(c.userValue != null){
+                // output the giving condition and filled
+                    result += c.userValue;
+                }
+                if(a < 8 || b < 8){
+                    // no comma in the end
+                    result += ",";
+                }
+            }
+            result += "\n";
+        }
     }, this.tips = function() {
+        // give tips for the current cell
+        for (var a = 0; 9 > a; a++){
+            for (var b = 0; 9 > b; b++) {
+                var c = this.grid[this._coordinatesToPosition({
+                    x: a,
+                    y: b
+                })];
+                if(c.current && c.masked){
+                        c.userValue = c.value;
+                        c.newTips = true; 
+                        c.focus = false;
+                        c.current = false;
+                        return;
+                }
+            }
+        }
+
+        // otherwise give the first unfilled cell
         for (var a = 0; 9 > a; a++)
             for (var b = 0; 9 > b; b++) {
                 var c = this.grid[this._coordinatesToPosition({
