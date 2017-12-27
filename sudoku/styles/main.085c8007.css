@@ -7298,6 +7298,7 @@ button.close {
 #game .grid-container .tile {
 	line-height: 55.56px;
 	font-size: 2.5em;
+	font-weight: bold;
 	text-align: center;
 	width: 55.56px;
 	height: 55.56px;
@@ -7310,7 +7311,7 @@ button.close {
 }
 
 #game .grid-container .tile.focused {
-	background-color: #ccd
+	background-color: #FBE389
 }
 
 #game .grid-container .tile.newTips {

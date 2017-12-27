@@ -124,23 +124,41 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 x: this.focus.x,
                 y: this.focus.y
             })];
-            // hightlight conflict area
-            for (var a = 0; 9 > a; a++)
-                for (var b = 0; 9 > b; b++) {
-                    var tmp = this.grid[this._coordinatesToPosition({
-                        x: a,
-                        y: b
-                    })];
-                    var value = false;
-                    if(a == this.focus.x || b == this.focus.y){
-                        // same row or column
-                        value = true;
-                    }else if(Math.floor(a/3) == Math.floor(this.focus.x/3) && Math.floor(b/3) == Math.floor(this.focus.y/3)){
-                        // same small grid
-                        value = true;
+            // hightlight conflict area only if there is no user input
+            if(current.masked && current.userValue == null){
+                for (var a = 0; 9 > a; a++){
+                    for (var b = 0; 9 > b; b++) {
+                        var tmp = this.grid[this._coordinatesToPosition({
+                            x: a,
+                            y: b
+                        })];
+                        var value = false;
+                        if(a == this.focus.x || b == this.focus.y){
+                            // same row or column
+                            value = true;
+                        }else if(Math.floor(a/3) == Math.floor(this.focus.x/3) && Math.floor(b/3) == Math.floor(this.focus.y/3)){
+                            // same small grid
+                            value = true;
+                        }
+                        if(tmp.masked && tmp.userValue==null){
+                            // if there is no user input, skip it, but question itself should be included, which is also no user input
+                            value = false;
+                        }
+                        tmp.focus = value;
+                        tmp.current = false;
                     }
-                    tmp.focus = value;
-                    tmp.current = false;
+                }
+            } else {
+                for (var a = 0; 9 > a; a++){
+                    for (var b = 0; 9 > b; b++) {
+                        var tmp = this.grid[this._coordinatesToPosition({
+                            x: a,
+                            y: b
+                        })];
+                        tmp.focus = false;
+                        tmp.current = false;
+                    }
+                }
             }
             current.focus = false;
             current.current = true;
