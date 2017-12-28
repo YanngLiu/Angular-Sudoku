@@ -8,7 +8,6 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             a.game.move(b)
         }), c.cb = function() {
             a.game.addSecond()
-            a.game.checkMinorWin();
         }
     }, this.newGame()
 }]), angular.module("Game", ["Grid"]).service("GameManager", ["$q", "GridService", function(a, b) {
