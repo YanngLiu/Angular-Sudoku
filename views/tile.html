@@ -1,4 +1,4 @@
-<div ng-if="ngModel" class="tile position-{{ ngModel.x }}-{{ ngModel.y }} tile-{{ ngModel.value }}" ng-class="{ 'focused': ngModel.focus, 'current': ngModel.current, 'newTips': ngModel.newTips}">
+<div ng-if="ngModel" class="tile position-{{ ngModel.x }}-{{ ngModel.y }} tile-{{ ngModel.value }}" ng-class="{ 'focused': ngModel.focus, 'current': ngModel.current, 'running': ngModel.running, 'newTips': ngModel.newTips}">
    <div ng-if="ngModel.masked" class="tile-masked" ng-class="{ 'sameNumber' : ngModel.sameNumber, 'wrong': ngModel.wrong}"> {{ ngModel.userValue }} </div>
    <div ng-if="!ngModel.masked" class="tile-initialvalue" ng-class="{ 'sameNumber' : ngModel.sameNumber, 'wrong': ngModel.wrong}"> {{ ngModel.value }} </div>
 </div>

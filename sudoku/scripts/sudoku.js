@@ -120,6 +120,9 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.placeInitialFocus = function() {
             this.focus.x = 0, this.focus.y = 0, this.refreshFocus()
         }, this.refreshFocus = function() {
+            for (var a = 0; 81 > a; a++){
+                this.grid[a].running = false;
+            }
             var current = this.grid[this._coordinatesToPosition({
                 x: this.focus.x,
                 y: this.focus.y
@@ -199,12 +202,88 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     }
                     tmp.newTips = false;
             }
+        }, this.checkMinorWin = function() {
+            if(!this.validGame()){
+                // if there is any wrong answer, cancel minor celebration.
+                return;
+            }
+
+            // Check column           
+            var full = true; 
+            for (var a = 0; 9 > a; a++){
+                var tmp = this.grid[this._coordinatesToPosition({
+                    x: a,
+                    y: this.focus.y
+                })];
+                if(tmp.masked && tmp.userValue ==null){
+                    full = false;
+                    break;
+                }
+            }
+            if(full){
+                for (var a = 0; 9 > a; a++){
+                    var tmp = this.grid[this._coordinatesToPosition({
+                        x: a,
+                        y: this.focus.y
+                    })];
+                    tmp.running = true;
+                }
+            }
+
+            // Check column           
+            var full = true; 
+            for (var b = 0; 9 > b; b++){
+                var tmp = this.grid[this._coordinatesToPosition({
+                    x: this.focus.x,
+                    y: b
+                })];
+                if(tmp.masked && tmp.userValue ==null){
+                    full = false;
+                    break;
+                }
+            }
+            if(full){
+                for (var b = 0; 9 > b; b++){
+                    var tmp = this.grid[this._coordinatesToPosition({
+                        x: this.focus.x,
+                        y: b
+                    })];
+                    tmp.running = true;
+                }
+            }
+
+            // Check minor grid           
+            var full = true; 
+            for (var a = Math.floor(this.focus.x/3); Math.floor(this.focus.x/3) + 3 > a; a++){
+                for (var b = Math.floor(this.focus.y/3); Math.floor(this.focus.y/3) + 3 > b; b++) {
+                    var tmp = this.grid[this._coordinatesToPosition({
+                        x: a,
+                        y: b
+                    })];
+                    if(tmp.masked && tmp.userValue ==null){
+                        full = false;
+                        break;
+                    }
+                }
+            }
+            if(full){
+                for (var a = Math.floor(this.focus.x/3); Math.floor(this.focus.x/3) + 3 > a; a++){
+                    for (var b = Math.floor(this.focus.y/3); Math.floor(this.focus.y/3) + 3 > b; b++) {
+                        var tmp = this.grid[this._coordinatesToPosition({
+                            x: a,
+                            y: b
+                        })];
+                        tmp.running = true;
+                    }
+                }
+            }
         }, this.putNumber = function(a) {
             this.grid[this._coordinatesToPosition({
                 x: this.focus.x,
                 y: this.focus.y
             })].userValue = a;
             this.highlightSameNumber();
+            this.checkMinorWin();
         }, this.putNumberXY = function(xx, yy, a) {
             var cell = this.grid[this._coordinatesToPosition({
                 x: xx,
