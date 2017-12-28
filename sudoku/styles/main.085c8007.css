@@ -7304,10 +7304,6 @@ button.close {
 	height: 55.56px;
 	margin-bottom: 2px;
 	margin-right: 2px
-    -webkit-animation:spin 1s linear infinite;
-    -moz-animation:spin 1s linear infinite;
-    animation:spin 1s linear infinite;
-	animation-play-state:paused;
 }
 
 #game .grid-container .tile.current {
@@ -7319,6 +7315,9 @@ button.close {
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 #game .grid-container .tile.running {
+    -webkit-animation:spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+    animation:spin 1s linear infinite;
 	animation-play-state:running;
 }
 

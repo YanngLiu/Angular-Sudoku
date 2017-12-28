@@ -62,7 +62,10 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         angular.element('#gameValue').val(result);
     }, this.move = function(c) {
         var e = function(game) {
-            ("up" === c || "down" === c || "left" === c || "right" === c) && b.moveFocus(c), (1 === c || 2 === c || 3 === c || 4 === c || 5 === c || 6 === c || 7 === c || 8 === c || 9 === c) && (b.putNumber(c), b.highlightSameNumber(), b.clearWrongs(), b.checkWin() && (game.timerRuning = false, game.openModal())), ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs())
+            ("up" === c || "down" === c || "left" === c || "right" === c) && b.moveFocus(c), (1 === c || 2 === c || 3 === c || 4 === c || 5 === c || 6 === c || 7 === c || 8 === c || 9 === c) && (b.putNumber(c), b.highlightSameNumber(), b.clearWrongs(), b.checkWin() && (game.timerRuning = false, game.openModal())), ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs());
+            if( "del" === c){
+                b.stopAnimation();
+            }
         };
         return a.when(e(this))
     }, this.checkValues = function() {
@@ -119,10 +122,12 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     }
         }, this.placeInitialFocus = function() {
             this.focus.x = 0, this.focus.y = 0, this.refreshFocus()
-        }, this.refreshFocus = function() {
+        }, this.stopAnimation = function() {
             for (var a = 0; 81 > a; a++){
                 this.grid[a].running = false;
             }
+        }, this.refreshFocus = function() {
+            this.stopAnimation();
             var current = this.grid[this._coordinatesToPosition({
                 x: this.focus.x,
                 y: this.focus.y
@@ -205,10 +210,11 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.checkMinorWin = function() {
             if(!this.validGame()){
                 // if there is any wrong answer, cancel minor celebration.
+                this.stopAnimation();
                 return;
             }
 
-            // Check column           
+            // Check row           
             var full = true; 
             for (var a = 0; 9 > a; a++){
                 var tmp = this.grid[this._coordinatesToPosition({
@@ -254,8 +260,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
 
             // Check minor grid           
             var full = true; 
-            for (var a = Math.floor(this.focus.x/3); Math.floor(this.focus.x/3) + 3 > a; a++){
-                for (var b = Math.floor(this.focus.y/3); Math.floor(this.focus.y/3) + 3 > b; b++) {
+            for (var a = Math.floor(this.focus.x/3) * 3; Math.floor(this.focus.x/3) * 3 + 3 > a; a++){
+                for (var b = Math.floor(this.focus.y/3) * 3; Math.floor(this.focus.y/3) * 3 + 3 > b; b++) {
                     var tmp = this.grid[this._coordinatesToPosition({
                         x: a,
                         y: b
@@ -267,8 +273,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 }
             }
             if(full){
-                for (var a = Math.floor(this.focus.x/3); Math.floor(this.focus.x/3) + 3 > a; a++){
-                    for (var b = Math.floor(this.focus.y/3); Math.floor(this.focus.y/3) + 3 > b; b++) {
+                for (var a = Math.floor(this.focus.x/3) * 3; Math.floor(this.focus.x/3) * 3 + 3 > a; a++){
+                    for (var b = Math.floor(this.focus.y/3) * 3; Math.floor(this.focus.y/3) * 3 + 3 > b; b++) {
                         var tmp = this.grid[this._coordinatesToPosition({
                             x: a,
                             y: b
