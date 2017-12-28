@@ -301,12 +301,29 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 })];
             var old = tmp.userValue;
             tmp.userValue = a;
-            if(!this.validGame()){
+            if(!this.validGame() && tmp.masked){
                 tmp.userValue = old;
                 tmp.inputError = true;
             }
             this.highlightSameNumber();
             this.checkMinorWin();
+
+            if(1 == 2 ){ //tmp.userValue == tmp.value){
+                var praise = $('#praise');
+                var className = "#tile-" + this.focus.x + "-" + this.focus.y;
+                var curTile = angular.element(className)[0];
+                var newPos= this.getPos(curTile);
+                praise.css({top:newPos.y, left: newPos.x, position:"absolute"});
+                praise.toggleClass('fadeout');
+                // praise.show();
+                setTimeout(function () {
+                    praise.toggleClass('fadeout');
+                }, 500);
+            }
+
+        }, this.getPos = function(el) {
+                for (var lx=0, ly=0; el != null; lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+            return {x: lx,y: ly};
         }, this.putNumberXY = function(xx, yy, a) {
             var cell = this.grid[this._coordinatesToPosition({
                 x: xx,
