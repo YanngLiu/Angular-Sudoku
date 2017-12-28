@@ -7370,6 +7370,14 @@ button.close {
 	animation-play-state:running;
 }
 
+#game .grid-container .tile.inputError {
+    -webkit-animation:bounce 0.5s 1;
+    -moz-animation:bounce 0.5s 1;
+    animation:bounce 0.5s 1;
+	animation-play-state:running;
+	background-color: #f00;
+}
+
 #game .grid-container .tile.focused {
 	background-color: #FBE389
 }

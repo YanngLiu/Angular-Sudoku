@@ -134,6 +134,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.stopAnimation = function() {
             for (var a = 0; 81 > a; a++){
                 this.grid[a].spin = false;
+                this.grid[a].inputError = false;
             }
         }, this.refreshFocus = function() {
             this.stopAnimation();
@@ -293,10 +294,17 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 }
             }
         }, this.putNumber = function(a) {
-            this.grid[this._coordinatesToPosition({
-                x: this.focus.x,
-                y: this.focus.y
-            })].userValue = a;
+            var tmp = 
+                this.grid[this._coordinatesToPosition({
+                    x: this.focus.x,
+                    y: this.focus.y
+                })];
+            var old = tmp.userValue;
+            tmp.userValue = a;
+            if(!this.validGame()){
+                tmp.userValue = old;
+                tmp.inputError = true;
+            }
             this.highlightSameNumber();
             this.checkMinorWin();
         }, this.putNumberXY = function(xx, yy, a) {
