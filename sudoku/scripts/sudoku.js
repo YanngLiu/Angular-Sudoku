@@ -8,6 +8,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             a.game.move(b)
         }), c.cb = function() {
             a.game.addSecond()
+            a.game.checkMinorWin();
         }
     }, this.newGame()
 }]), angular.module("Game", ["Grid"]).service("GameManager", ["$q", "GridService", function(a, b) {
@@ -39,7 +40,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         var d = 0,
             e = "";
         for (a = 0; 81 > a; a++, d++) e += this.grid[a].value + ", ", 8 === d && (e = "", d = -1);
-        b.placeInitialFocus(), this.timerRunning = !0, this.refreshPrintableTimer()
+        b.placeInitialFocus(), this.timerRunning = !0, this.refreshPrintableTimer();    
+        b.welcomeSpin();
     }, this.selectTile = function(a) {
         b.placeFocus(a)
     }, this.selectNumber = function(a) {
@@ -60,6 +62,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
     }, this.exportGame = function() {
         var result = b.exportGame();
         angular.element('#gameValue').val(result);
+    }, this.checkMinorWin = function() {
+        b.checkMinorWin();
     }, this.move = function(c) {
         var e = function(game) {
             ("up" === c || "down" === c || "left" === c || "right" === c) && b.moveFocus(c), (1 === c || 2 === c || 3 === c || 4 === c || 5 === c || 6 === c || 7 === c || 8 === c || 9 === c) && (b.putNumber(c), b.highlightSameNumber(), b.clearWrongs(), b.checkWin() && (game.timerRuning = false, game.openModal())), ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs());
@@ -122,6 +126,12 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     }
         }, this.placeInitialFocus = function() {
             this.focus.x = 0, this.focus.y = 0, this.refreshFocus()
+        }, this.welcomeSpin = function() {
+            for (var a = 0; 81 > a; a++){
+                if(!this.grid[a].masked){
+                    this.grid[a].running = true;
+                }
+            }
         }, this.stopAnimation = function() {
             for (var a = 0; 81 > a; a++){
                 this.grid[a].running = false;
