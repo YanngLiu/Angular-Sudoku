@@ -7314,7 +7314,7 @@ button.close {
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
-#game .grid-container .tile.running {
+#game .grid-container .tile.spin {
     -webkit-animation:spin 1s linear 1;
     -moz-animation:spin 1s linear 1;
     animation:spin 1s linear 1;

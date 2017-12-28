@@ -128,12 +128,12 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.welcomeSpin = function() {
             for (var a = 0; 81 > a; a++){
                 if(!this.grid[a].masked){
-                    this.grid[a].running = true;
+                    this.grid[a].spin = true;
                 }
             }
         }, this.stopAnimation = function() {
             for (var a = 0; 81 > a; a++){
-                this.grid[a].running = false;
+                this.grid[a].spin = false;
             }
         }, this.refreshFocus = function() {
             this.stopAnimation();
@@ -241,7 +241,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                         x: a,
                         y: this.focus.y
                     })];
-                    tmp.running = true;
+                    tmp.spin = true;
                 }
             }
 
@@ -263,7 +263,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                         x: this.focus.x,
                         y: b
                     })];
-                    tmp.running = true;
+                    tmp.spin = true;
                 }
             }
 
@@ -288,7 +288,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                             x: a,
                             y: b
                         })];
-                        tmp.running = true;
+                        tmp.spin = true;
                     }
                 }
             }
