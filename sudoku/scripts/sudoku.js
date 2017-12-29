@@ -67,7 +67,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         var e = function(game) {
             ("up" === c || "down" === c || "left" === c || "right" === c) && b.moveFocus(c), (1 === c || 2 === c || 3 === c || 4 === c || 5 === c || 6 === c || 7 === c || 8 === c || 9 === c) && (b.putNumber(c), b.highlightSameNumber(), b.clearWrongs(), b.checkWin() && (game.timerRuning = false, game.openModal())), ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs());
             if( "del" === c){
-                b.stopAnimation();
+                b.stopAnimation(false);
             }
         };
         return a.when(e(this))
@@ -131,13 +131,15 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     this.grid[a].spin = true;
                 }
             }
-        }, this.stopAnimation = function() {
+        }, this.stopAnimation = function(skipInputError) {
             for (var a = 0; 81 > a; a++){
                 this.grid[a].spin = false;
-                this.grid[a].inputError = false;
+                if(!skipInputError){
+                    this.grid[a].inputError = false;
+                }
             }
         }, this.refreshFocus = function() {
-            this.stopAnimation();
+            this.stopAnimation(false);
             var current = this.grid[this._coordinatesToPosition({
                 x: this.focus.x,
                 y: this.focus.y
@@ -220,7 +222,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.checkMinorWin = function() {
             if(!this.validGame()){
                 // if there is any wrong answer, cancel minor celebration.
-                this.stopAnimation();
+                this.stopAnimation(true);
                 return;
             }
 
@@ -302,21 +304,32 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             tmp.userValue = a;
             if(!this.validGame() && tmp.masked){
                 tmp.inputError = true;
+                var self = this;
+                setTimeout(function () {
+                    tmp.inputError = false;
+                    self.checkValues();
+                }, 500);
             }
             this.highlightSameNumber();
             this.checkMinorWin();
 
-            if(1 == 2 ){ //tmp.userValue == tmp.value){
+            if(tmp.userValue == tmp.value){
                 var praise = $('#praise');
                 var className = "#tile-" + this.focus.x + "-" + this.focus.y;
                 var curTile = angular.element(className)[0];
                 var newPos= this.getPos(curTile);
-                praise.css({top:newPos.y, left: newPos.x, position:"absolute"});
-                praise.toggleClass('fadeout');
-                // praise.show();
+                praise.css({top:newPos.y, left: newPos.x, position:"absolute", display: "block", zIndex:"-1"});
+                praise.removeClass('scaleOut');
                 setTimeout(function () {
-                    praise.toggleClass('fadeout');
-                }, 500);
+                    praise.toggleClass('scaleOut');
+                    setTimeout(function () {
+                        // praise.css({display: "none"});
+                        praise.removeClass('hidden');
+                        setTimeout(function () {
+                            praise.toggleClass('hidden');
+                        }, 1050);
+                    }, 10);
+                }, 10);
             }
 
         }, this.getPos = function(el) {
