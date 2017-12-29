@@ -299,10 +299,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     x: this.focus.x,
                     y: this.focus.y
                 })];
-            var old = tmp.userValue;
             tmp.userValue = a;
             if(!this.validGame() && tmp.masked){
-                tmp.userValue = old;
                 tmp.inputError = true;
             }
             this.highlightSameNumber();
