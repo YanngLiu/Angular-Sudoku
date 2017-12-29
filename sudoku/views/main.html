@@ -1,7 +1,7 @@
 <div id="content" ng-controller="GameController as ctrl">
    <div id="heading" class="row">
       <div class="scores-container">
-         <div class="timer-container">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }}</div>
+         <div class="timer-container"id="timerEclipsed">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }} Score: {{ctrl.game.score}}</div>
          <button class="btn btn-default" ng-click="ctrl.game.checkValues()"> 检查</button> <button class="btn btn-default" ng-click="ctrl.game.tips()"> 提示</button> <button class="btn btn-default" ng-click="ctrl.game.newGame()"> 新游戏 </button> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" checked value="0"> 容易</label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="1"> 一般 </label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="2"> 困难 </label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="3"> 超难 </label> <button class="btn btn-default" ng-click="ctrl.game.inputGame()"> 输入</button><button class="btn btn-default" ng-click="ctrl.game.inputGameOver()"> 输入结束</button>
       </div>
    </div>

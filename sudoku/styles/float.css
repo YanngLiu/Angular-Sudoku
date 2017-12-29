@@ -1,3 +1,9 @@
+.praise{
+    display: none;
+    text-align: center;
+    color: #f00;
+ }
+
 .scaleOut{
     height:150px;
     width:150px;
