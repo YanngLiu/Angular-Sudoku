@@ -76,8 +76,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     self.score += b.getStepScore();
                 }
                 b.highlightSameNumber(), b.clearWrongs(), b.checkWin() && (game.timerRuning = false, game.openModal());
-                ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs());
             }
+            ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs());
             if( "del" === c){
                 b.stopAnimation(false);
             }
@@ -113,7 +113,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
     return a
 }).provider("GridService", function() {
     this.$get = ["TileModel", function(a) {
-        this.grid = [], this.size = 9, this.prevTime=0, this.stepScore = 0, this.focus = {
+        this.grid = [], this.size = 9, this.prevTime=0, this.stepScore = 0, this.skipAnimation = false, this.focus = {
             x: 0,
             y: 0
         };
@@ -314,6 +314,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     x: this.focus.x,
                     y: this.focus.y
                 })];
+            var oldValue = tmp.userValue;
             tmp.userValue = a;
             if(!this.validGame() && tmp.masked){
                 tmp.inputError = true;
@@ -333,13 +334,17 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             }
 
             if(tmp.masked){
-                // user input
-                return true;
+                // user input different value and not in inputGame mode
+                // TODO need to reset the score when input is over.
+                return !this.skipAnimation && oldValue != a;
             }else{
                 return false;
             }
 
         }, this.givePraise = function(minus) {
+            if(this.skipAnimation){
+                return;
+            }
             var praise = $('#praise');
             var className = "#tile-" + this.focus.x + "-" + this.focus.y;
             var curTile = angular.element(className)[0];
@@ -604,7 +609,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }
         return true;
     }, this.inputGame = function() {
-        for (var a = 0; 9 > a; a++)
+        for (var a = 0; 9 > a; a++){
             for (var b = 0; 9 > b; b++) {
                 var c = this.grid[this._coordinatesToPosition({
                     x: a,
@@ -619,8 +624,10 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                 c.masked = true;
                 c.value = null;
             }
+        }
+        this.skipAnimation = true;
     }, this.inputGameOver = function() {
-        for (var a = 0; 9 > a; a++)
+        for (var a = 0; 9 > a; a++){
             for (var b = 0; 9 > b; b++) {
                 var c = this.grid[this._coordinatesToPosition({
                     x: a,
@@ -632,7 +639,9 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     c.value = c.userValue;
                 }
             }
+        }
         this.resolve(false);
+        this.skipAnimation = false;
     }, this.exportGame = function() {
         var result = "";
         for (var a = 0; 9 > a; a++){
