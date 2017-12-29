@@ -11,7 +11,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }
     }, this.newGame()
 }]), angular.module("Game", ["Grid"]).service("GameManager", ["$q", "GridService", function(a, b) {
-    this.grid = b.grid, this.level = 0, this.seconds = 0, this.printableSeconds = 0, this.printableMinutes = 0, this.printableHours = 0, this.score = 0, this.timerRunning = !0, self = this, this.addSecond = function() {
+    this.grid = b.grid, this.level = 0, this.seconds = 0, this.printableSeconds = 0, this.printableMinutes = 0, this.printableHours = 0, this.score = 0, this.timerRunning = !0, this.addSecond = function() {
         this.timerRunning && (this.seconds++, this.refreshPrintableTimer())
     }, this.openModal = function() {
         this.timerRunning = !1, $("#winmodal").modal()
@@ -68,6 +68,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
     }, this.checkMinorWin = function() {
         b.checkMinorWin();
     }, this.move = function(c) {
+        var self = this;
         var e = function(game) {
             ("up" === c || "down" === c || "left" === c || "right" === c) && b.moveFocus(c);
             if(1 === c || 2 === c || 3 === c || 4 === c || 5 === c || 6 === c || 7 === c || 8 === c || 9 === c) {
