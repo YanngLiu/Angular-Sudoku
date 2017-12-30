@@ -46,8 +46,11 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         for (a = 0; 81 > a; a++, d++) e += this.grid[a].value + ", ", 8 === d && (e = "", d = -1);
         b.placeInitialFocus(), this.timerRunning = !0, this.refreshPrintableTimer();    
         b.welcomeSpin();
+        return true; // to run updateSelector() too when user click new game button
     }, this.selectTile = function(a) {
         b.placeFocus(a)
+    }, this.valueUsedOut = function(value) {
+        return b.valueUsedOut(value);
     }, this.selectNumber = function(a) {
         var addScore = b.putNumber(a);
         b.clearWrongs(), b.checkWin() && (this.timerRuning = false, this.openModal());
@@ -72,6 +75,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         angular.element('#gameValue').val(result);
     }, this.checkMinorWin = function() {
         b.checkMinorWin();
+    }, this.updateSelector = function() {
+        b.updateSelector();
     }, this.move = function(c) {
         var self = this;
         var e = function(game) {
@@ -86,6 +91,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             ("backspace" === c || "del" === c || 0 === c) && (b.remove(), b.highlightSameNumber(), b.clearWrongs());
             if( "del" === c){
                 b.stopAnimation(false);
+                b.updateSelector();
             }
         };
         return a.when(e(this))
@@ -107,7 +113,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
     }, this.tips = function() {
         var self = this; 
         var c = function() {
-            b.tips()
+            b.tips();
+            b.updateSelector();
             self.tipsCount--;
             self.score -= 2000;
         };
@@ -338,6 +345,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             }
             this.highlightSameNumber();
             this.checkMinorWin();
+            this.updateSelector();
 
             if(tmp.userValue == tmp.value){
                 this.givePraise(false);
@@ -435,6 +443,28 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             this.stepScore = res;
 
             return res;
+        }, this.updateSelector = function() {
+            var numberCnt = [];
+            for(var i = 0; i < this.size + 1; i++){
+                numberCnt.push(0);
+            }
+
+
+            for(var i = 0; i < this.size * this.size; i++){
+                var target = 0;
+                if(this.grid[i].masked){
+                    target = this.grid[i].userValue;
+                }else{
+                    target = this.grid[i].value;
+                }
+                numberCnt[target]++;                    
+            }
+
+            for(var i = 1; i < this.size + 1; i++){
+                var id = '#selectable-tile-' + i;
+                angular.element(id)[0].innerHTML = (numberCnt[i] == this.size ? ' ': i);
+            }
+
         }, this.putNumberXY = function(xx, yy, a) {
             var cell = this.grid[this._coordinatesToPosition({
                 x: xx,
@@ -451,6 +481,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             }
             cell.focus = false;
             cell.sameNumber = false;
+            this.updateSelector();
             
         }, this.isValid = function(i, j , c) {
             // Check colum
@@ -531,6 +562,20 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             })].userValue = null
         }, this.placeFocus = function(a) {
             this.focus = a, this.refreshFocus()
+        }, this.valueUsedOut = function(value) {
+            var cnt = 0;
+            for(var i = 0; i < 81; i++){
+                var target = 0;
+                if(this.grid[i].masked){
+                    target = this.grid[i].userValue;
+                }else{
+                    target = this.grid[i].value;
+                }
+                if(target == value){
+                    cnt++;
+                }
+            }
+            return cnt == this.size;
         }, this.moveFocus = function(a) {
             "down" === a && this.focus.y < 8 && this.focus.y++, "up" === a && this.focus.y > 0 && this.focus.y--, "right" === a && this.focus.x < 8 && this.focus.x++, "left" === a && this.focus.x > 0 && this.focus.x--, this.refreshFocus()
         }, this.buildNewGameBoard = function() {
