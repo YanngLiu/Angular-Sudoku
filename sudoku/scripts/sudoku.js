@@ -11,8 +11,13 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }
     }, this.newGame()
 }]), angular.module("Game", ["Grid"]).service("GameManager", ["$q", "GridService", function(a, b) {
-    this.grid = b.grid, this.level = 0, this.seconds = 0, this.printableSeconds = 0, this.printableMinutes = 0, this.printableHours = 0, this.score = 0, this.timerRunning = !0, this.addSecond = function() {
-        this.timerRunning && (this.seconds++, this.refreshPrintableTimer())
+    this.grid = b.grid, this.level = 0, this.seconds = 0, this.printableSeconds = 0, this.printableMinutes = 0, this.printableHours = 0, this.score = 0, this.timerRunning = !0, 
+    this.tipsCount = 3 + Math.floor(6 * Math.random()),
+    this.addSecond = function() {
+        if(this.timerRunning){
+            this.seconds++;
+            this.refreshPrintableTimer();
+        }
     }, this.openModal = function() {
         this.timerRunning = !1, $("#winmodal").modal()
     }, this.refreshPrintableTimer = function() {
@@ -23,7 +28,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         this.printableSeconds = a(this.seconds % 60, 2), this.printableHours = Math.floor(this.seconds / 3600), this.printableMinutes = a(Math.floor((this.seconds - 3600 * this.printableHours) / 60), 2)
     }, this.newGame = function() {
         var a;
-        this.seconds = 0, b.buildNewGameBoard(), this.level = parseInt(this.level, 10);
+        this.seconds = 0, this.tipsCount = 3 + Math.floor(6 * Math.random()), b.buildNewGameBoard(), this.level = parseInt(this.level, 10);
         var c;
         if (0 === this.level || 1 === this.level) {
             if (b.maskBoardEasy(), 0 === this.level)
@@ -100,8 +105,10 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         };
         return a.when(c())
     }, this.tips = function() {
+        var self = this; 
         var c = function() {
             b.tips()
+            self.tipsCount--;
         };
         return a.when(c())
     }
@@ -675,7 +682,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     x: a,
                     y: b
                 })];
-                if(c.current && c.masked){
+                if(c.current && c.masked && c.userValue != c.value){
                         c.userValue = c.value;
                         c.newTips = true; 
                         c.focus = false;

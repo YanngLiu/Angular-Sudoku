@@ -37,7 +37,7 @@
            </div>
          </div>
          <span style="display:inline-block; width: 100px;"></span>
-         <a href="#" class="btn btn-success" ng-click="ctrl.game.tips()">提示 <span class="glyphicon glyphicon-screenshot"></span></a>
+         <a href="#" class="btn btn-success" id="tipsButton" ng-click="ctrl.game.tipsCount == 0 || ctrl.game.tips()">提示 {{ ctrl.game.tipsCount }} <span class="glyphicon glyphicon-screenshot"></span></a>
       </div>
    </div>
    <div id="game-container">
