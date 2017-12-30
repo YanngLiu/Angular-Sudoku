@@ -28,7 +28,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         this.printableSeconds = a(this.seconds % 60, 2), this.printableHours = Math.floor(this.seconds / 3600), this.printableMinutes = a(Math.floor((this.seconds - 3600 * this.printableHours) / 60), 2)
     }, this.newGame = function() {
         var a;
-        this.seconds = 0, this.tipsCount = 3 + Math.floor(6 * Math.random()), b.buildNewGameBoard();
+        this.seconds = 0, this.score = 0, this.tipsCount = 3 + Math.floor(6 * Math.random()), b.buildNewGameBoard();
         var c;
         if ("容易" === this.level || "一般" === this.level) {
             if (b.maskBoardEasy(), "容易" === this.level)
@@ -109,6 +109,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         var c = function() {
             b.tips()
             self.tipsCount--;
+            self.score -= 2000;
         };
         return a.when(c())
     }
@@ -121,7 +122,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
     return a
 }).provider("GridService", function() {
     this.$get = ["TileModel", function(a) {
-        this.grid = [], this.size = 9, this.prevTime=0, this.stepScore = 0, this.skipAnimation = false, this.focus = {
+        this.grid = [], this.size = 9, this.emptyCellsCount = 0, this.prevTime=0, this.stepScore = 0, this.skipAnimation = false, this.focus = {
             x: 0,
             y: 0
         };
@@ -146,10 +147,13 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.placeInitialFocus = function() {
             this.focus.x = 0, this.focus.y = 0, this.refreshFocus()
         }, this.welcomeSpin = function() {
+            this.emptyCellsCount = 0;
             for (var a = 0; 81 > a; a++){
                 if(!this.grid[a].masked){
                     // only spin cell which has intial value.
                     this.grid[a].spin = true;
+                }else{
+                    this.emptyCellsCount++;
                 }
             }
         }, this.stopAnimation = function(skipInputError) {
@@ -387,6 +391,14 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         }, this.getStepScore = function(minus) {
             return this.stepScore;
         }, this.computeStepScore = function(minus) {
+            var difficultyScore = 27;
+            var timeScore = 20;
+            var difficultyPenalty = 7;
+            var timePenalty = 9;
+            var reasonableTimeNeeded = 3 * 60;
+            // There is just few unifinished, things become easy again.
+            var difficultyEasyAgain = 10;
+
             var unfinished = 0;
             for (var a = 0; 81 > a; a++){
                 if(this.grid[a].masked && this.grid[a].userValue != this.grid[a].value){
@@ -398,17 +410,26 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             var stepUsedSeconds = curTime - this.prevTime;
             this.prevTime = curTime;
 
-            var res = (81 - unfinished) * 37 + (120 - stepUsedSeconds) * 30;
+            var cellDifficulty = this.emptyCellsCount - unfinished + 1;
+            if(unfinished <= difficultyEasyAgain){
+                cellDifficulty = unfinished; 
+            }
+            var res = cellDifficulty * difficultyScore + (reasonableTimeNeeded - stepUsedSeconds) * timeScore;
 
-            // at most minus 120 if user use too many time
-            if(res < -120){
-                res = -120;
+            // at least 521 if user use too many time, assuming 3 minutes are enough
+            if(res < 0){
+                res = 521;
             }
 
             // if user input error
             if(minus){
-                res = unfinished * 17 + stepUsedSeconds * 20;
+                res = (unfinished - cellDifficulty) * difficultyPenalty + stepUsedSeconds * timePenalty;
                 res *= -1;
+
+                // at most case
+                if(res < -522){
+                    res = -522;
+                }
             }
 
             this.stepScore = res;

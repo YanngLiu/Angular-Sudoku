@@ -1,7 +1,7 @@
 <div id="content" ng-controller="GameController as ctrl">
    <div id="heading" class="row">
       <div class="scores-container">
-         <div class="timer-container"id="timerEclipsed">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }} Score: {{ctrl.game.score}}</div>
+         <div class="timer-container"id="timerEclipsed">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }} <span style="display:inline-block; width: 50px;"></span>Score: {{ctrl.game.score}}</div>
          <a href="#" class="btn btn-danger" ng-click="ctrl.game.newGame()">新游戏 <span class="glyphicon glyphicon-refresh"></span></a>
 
          <div class="btn-group">
