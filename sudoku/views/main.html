@@ -1,7 +1,7 @@
 <div id="content" ng-controller="GameController as ctrl">
    <div id="heading" class="row">
       <div class="scores-container">
-         <div class="timer-container"id="timerEclipsed">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }} <span style="display:inline-block; width: 50px;"></span>Score: {{ctrl.game.score}}</div>
+         <div class="timer-container"id="timerEclipsed">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }} <span style="display:inline-block; width: 5px;"></span>Score: {{ctrl.game.score}}</div>
          <a href="#" class="btn btn-danger" ng-click="ctrl.game.newGame()">新游戏 <span class="glyphicon glyphicon-refresh"></span></a>
 
          <div class="btn-group">
@@ -36,7 +36,7 @@
                </li>
            </div>
          </div>
-         <span style="display:inline-block; width: 100px;"></span>
+         <span style="display:inline-block; width: 5px;"></span>
          <a href="#" class="btn btn-success" id="tipsButton" ng-click="ctrl.game.tipsCount == 0 || ctrl.game.tips()">提示 {{ ctrl.game.tipsCount }} <span class="glyphicon glyphicon-screenshot"></span></a>
       </div>
    </div>
@@ -52,7 +52,7 @@
          <p align="center">
             <a href="#" class="btn btn-primary" ng-click="ctrl.game.exportGame()">导出 <span class="glyphicon glyphicon-export"></span></a>
             <a href="#" class="btn btn-success" ng-click="ctrl.game.importGame()" title="用逗号分隔">导入 <span class="glyphicon glyphicon-import"></span></a>
-            <span style="display:inline-block; width: 100px;"></span>
+            <span style="display:inline-block; width: 5px;"></span>
             <a href="#" class="btn btn-primary" ng-click="ctrl.game.inputGame()">输入 <span class="glyphicon glyphicon-pencil"></span></a>
             <a href="#" class="btn btn-success" ng-click="ctrl.game.inputGameOver()">输入结束 <span class="glyphicon glyphicon-ok"></span></a>
          </p>
