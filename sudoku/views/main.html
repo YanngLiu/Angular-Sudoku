@@ -2,24 +2,42 @@
    <div id="heading" class="row">
       <div class="scores-container">
          <div class="timer-container"id="timerEclipsed">{{ ctrl.game.printableHours }}:{{ ctrl.game.printableMinutes }}:{{ ctrl.game.printableSeconds }} Score: {{ctrl.game.score}}</div>
-         <a href="#" class="btn btn-info" ng-click="ctrl.game.tips()" title="提示"><span class="glyphicon glyphicon-screenshot"></span></a>
          <a href="#" class="btn btn-primary" ng-click="ctrl.game.newGame()" title="新游戏"><span class="glyphicon glyphicon-refresh"></span></a>
-         <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" checked value="0"> 容易</label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="1"> 一般 </label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="2"> 困难 </label> <label class="radio-inline"> <input type="radio" name="level" ng-model="ctrl.game.level" value="3"> 超难 </label> 
 
-<div class="btn-group">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
-  </div>
-</div>
+         <div class="btn-group">
+           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             难度
+             <span class="caret"></span>
+           </button>
+           <div class="dropdown-menu">
+               <li>
+                  <div>
+                     <label class="radio-inline"> <input class="dropdown-item" type="radio" name="level" ng-model="ctrl.game.level" checked value="0"> 容易</label>
+                     <a href="#"><span class="glyphicon glyphicon-star-empty pull-right"></span></a>
+                  </div>
+               </li>
+               <li>
+                  <div>
+                     <label class="radio-inline"> <input class="dropdown-item" type="radio" name="level" ng-model="ctrl.game.level" checked value="1"> 一般</label>
+                  </div>
+               </li>
+               <li>
+                  <div>
+                     <label class="radio-inline"> <input class="dropdown-item" type="radio" name="level" ng-model="ctrl.game.level" checked value="2"> 困难</label>
+                     <a href="#"><span class="glyphicon glyphicon-star pull-right"></span></a>
+                  </div>
+               </li>
+               <li>
+                  <div>
+                     <label class="radio-inline"> <input class="dropdown-item" type="radio" name="level" ng-model="ctrl.game.level" checked value="3"> 魔鬼难</label>
+                     <a href="#"><span class="glyphicon glyphicon-star pull-right"></span></a>
+                     <a href="#"><span class="glyphicon glyphicon-star pull-right"></span></a>
+                  </div>
+               </li>
+           </div>
+         </div>
 
-        <button class="btn btn-default" ng-click="ctrl.game.inputGame()"> 输入</button><button class="btn btn-default" ng-click="ctrl.game.inputGameOver()"> 输入结束</button>
+         <a href="#" class="btn btn-info" ng-click="ctrl.game.tips()" title="提示"><span class="glyphicon glyphicon-screenshot"></span></a>
       </div>
    </div>
    <div id="game-container">
@@ -29,6 +47,13 @@
       </div>
       <div class="row">
          <div id="importergame" importergame ng-model="ctrl.game"></div>
+      </div>
+      <div class ="center">
+         <p align="center"><button class="btn btn-default" ng-click="ngModel.importGame()">导入(用逗号分隔)</button> <button class="btn btn-default" ng-click="ngModel.exportGame()">导出</button>
+            <a href="#" class="btn btn-info" ng-click="ctrl.game.inputGame()">输入<span class="glyphicon glyphicon-edit"></span></a>
+            <a href="#" class="btn btn-info" ng-click="ctrl.game.inputGameOver()">输入结束<span class="glyphicon glyphicon-check"></span></a>
+         </p>
+
       </div>
    </div>
    <div class="modal fade" id="winmodal">
