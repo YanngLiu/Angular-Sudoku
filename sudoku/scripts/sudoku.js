@@ -694,12 +694,19 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
                     c.userValue = c.value;
                 }
                 c.wrong = false;
+                c.userValue = null;
+                c.focus = false;
+                c.current = false;
                 c.sameNumber = false;
                 c.masked = true;
                 c.value = null;
             }
         }
         this.skipAnimation = true;
+        this.focus.x = 0;
+        this.focus.y = 0;
+        this.grid[0].current = true;
+        window.scrollTo(0, 0);
     }, this.inputGameOver = function() {
         for (var a = 0; 9 > a; a++){
             for (var b = 0; 9 > b; b++) {
