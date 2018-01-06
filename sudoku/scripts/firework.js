@@ -5,7 +5,7 @@ var options = {
   /* How many ticks the script should wait before a new firework gets spawned, if the user is holding down his mouse button. */
   clickLimiter: 5,
   /* How fast the rockets should automatically spawn, based on ticks */
-  timerInterval: 10,
+  timerInterval: 30,
   /* Show pulsing circles marking the targets? */
   showTargets: false,
   /* Rocket movement options, should be self-explanatory */
@@ -16,12 +16,12 @@ var options = {
   particleGravity: 1,
   /* Minimum and maximum amount of particle spawns per rocket */
   particleMinCount: 20,
-  particleMaxCount: 50,
+  particleMaxCount: 30,
   /* Minimum and maximum radius of a particle */
-  particleMinRadius: 0.7,
-  particleMaxRadius: 3,
+  particleMinRadius: 3,
+  particleMaxRadius: 5,
   /* Time to stop */
-  timeToStop: 30
+  timeToStop: 10
 };
 
 // Local variables
