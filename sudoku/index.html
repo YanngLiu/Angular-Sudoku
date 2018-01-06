@@ -6,6 +6,7 @@
       <!-- Place favicon.ico and apple-touch-icon.png in the root directory --> 
       <link rel="stylesheet" href="./styles/main.085c8007.css">
       <link rel="stylesheet" href="./styles/float.css">
+      <link rel="stylesheet" href="./styles/firework.css">
       <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap-glyphicons/1.0/css/bootstrap-glyphicons.css">
       <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
       <meta name="description" content="Play sudokus with several levels of difficulty, without having to download anything or install anything in an elegant and intuitive way.">
@@ -34,6 +35,10 @@
          <div class='praise' id = 'praise'>
              <img src="img/icon/great.gif" id="praiseIcon" alt="Well Done!" height="125" width="172">
              <h2 id="stepScore"></h2>
+         </div>
+         <div id='canvasDiv' class = 'center'>
+           <canvas id="canvas" class='floatCanvas'>
+           </canvas>
          </div>
          <div ng-include="'./views/main.html'"></div>
          <div class="footer">
@@ -74,4 +79,5 @@
     <script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular-cookies.js"></script>
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular-animate.js"></script>
+    <script src="./scripts/firework.js"></script>
     <script src="./scripts/sudoku.js"></script>

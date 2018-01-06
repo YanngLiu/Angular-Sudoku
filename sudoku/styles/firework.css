@@ -1,0 +1,10 @@
+.floatCanvas {
+  display: none;
+  top:10px;
+  left:100px;
+  height:100%;
+  width:100%;
+  cursor: crosshair;
+  position: absolute;
+  z-index: 100;
+}

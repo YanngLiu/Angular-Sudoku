@@ -19,7 +19,19 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             this.refreshPrintableTimer();
         }
     }, this.openModal = function() {
-        this.timerRunning = !1, $("#winmodal").modal()
+        this.timerRunning = !1;
+        var canvas = $("#canvas");
+        canvas.show();
+        fireworkInit();
+        fireworkGameLoop();
+
+        setTimeout(function () {
+            $("#winmodal").modal();
+        }, 4500);
+        setTimeout(function () {
+            canvas.hide();
+        }, 5500);
+
     }, this.refreshPrintableTimer = function() {
         var a = function(a, b) {
             for (var c = "" + a; c.length < b;) c = "0" + c;
