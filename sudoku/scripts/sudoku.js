@@ -10,7 +10,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             a.game.addSecond()
         }
     }, this.newGame()
-}]), angular.module("Game", ["Grid"]).service("GameManager", ["$q", "GridService", function(a, b) {
+}]), angular.module("Game", ["Grid"]).service("GameManager", ["$q","GridService", "$document", function(a, b, c) {
     this.grid = b.grid, this.level = "容易", this.seconds = 0, this.printableSeconds = 0, this.printableMinutes = 0, this.printableHours = 0, this.score = 0, this.timerRunning = !0, 
     this.tipsCount = 3 + Math.floor(6 * Math.random()),
     this.addSecond = function() {
@@ -81,7 +81,8 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
             b.putNumberXY(i % 9, Math.floor(i / 9), parseInt(tmp[i]));
         }
         b.clearWrongs();
-        b.resolve(true);
+        var btn= document.getElementsByClassName("btn-group");
+        b.resolve(!btn[1].classList.contains("open"));
     }, this.exportGame = function() {
         var result = b.exportGame();
         angular.element('#gameValue').val(result);
@@ -904,7 +905,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         scope: {
             ngModel: "="
         },
-        templateUrl: "/yang/sudoku/Angular-Sudoku/views/grid.html"
+        templateUrl: "/sudoku/Angular-Sudoku/views/grid.html"
     }
 }), angular.module("Grid").directive("tile", function() {
     return {
@@ -912,7 +913,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         scope: {
             ngModel: "="
         },
-        templateUrl: "/yang/sudoku/Angular-Sudoku/views/tile.html"
+        templateUrl: "/sudoku/Angular-Sudoku/views/tile.html"
     }
 }), angular.module("Keyboard", []).service("KeyboardService", ["$document", function(a) {
     var b = "up",
@@ -977,7 +978,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         scope: {
             ngModel: "="
         },
-        templateUrl: "/yang/sudoku/Angular-Sudoku/views/selector.html"
+        templateUrl: "/sudoku/Angular-Sudoku/views/selector.html"
     }
 }),  angular.module("ImporterGame", []).directive("importergame", function() {
     return {
@@ -986,7 +987,7 @@ angular.module("sudokuApp", ["Game", "Grid", "Keyboard", "Timer", "Selector", "I
         scope: {
             ngModel: "="
         },
-        templateUrl: "/yang/sudoku/Angular-Sudoku/views/importergame.html"
+        templateUrl: "/sudoku/Angular-Sudoku/views/importergame.html"
     }
 }), angular.module("Timer", []).service("TimerService", ["$timeout", function(a) {
     this.cb = null;

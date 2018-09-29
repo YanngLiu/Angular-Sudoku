@@ -4,7 +4,7 @@ This program supports Sudoku random generation, playing, tips, resolver, importe
 
 ## Note
 - You might need to change templateUrl value in file sudoku/scripts/sudoku.js to your own web config setting.
-- You could find a live demo here: http://www.grainbuds.net/yang/sudoku/Angular-Sudoku/sudoku/
+- You could find a live demo here: http://game.grainbuds.net/sudoku
 
 ## Known issues
 1. Finishing game leads no congratulations.
